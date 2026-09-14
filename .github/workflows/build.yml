@@ -13,109 +13,92 @@ jobs:
     name: Build Debug APK
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: MyCablePro_Full_Updated_Project
+
     steps:
 
-      # 1. Checkout source code
+      # -----------------------------
+      # 1. Checkout
+      # -----------------------------
       - name: Checkout project
         uses: actions/checkout@v4
 
-      # 2. Show project structure
-      - name: Find Android project
-        shell: bash
-        run: |
-          echo "Repository contents:"
-          ls -la
-
-          echo ""
-          echo "Searching for Gradle wrapper..."
-
-          GRADLEW_PATH=$(find . -type f -name "gradlew" -print -quit)
-
-          if [ -z "$GRADLEW_PATH" ]; then
-            echo "ERROR: gradlew was not found."
-            echo ""
-            echo "Searching for Gradle files:"
-            find . -maxdepth 5 -type f \( \
-              -name "settings.gradle" -o \
-              -name "settings.gradle.kts" -o \
-              -name "build.gradle" -o \
-              -name "build.gradle.kts" \
-            \) -print
-            exit 1
-          fi
-
-          PROJECT_DIR=$(dirname "$GRADLEW_PATH")
-
-          echo "Gradle wrapper found at:"
-          echo "$GRADLEW_PATH"
-
-          echo "Android project directory:"
-          echo "$PROJECT_DIR"
-
-          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
-
-      # 3. Java 17
+      # -----------------------------
+      # 2. Java 17
+      # -----------------------------
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
 
-      # 4. Make Gradle executable
-      - name: Make Gradle executable
-        working-directory: ${{ env.PROJECT_DIR }}
+      # -----------------------------
+      # 3. Setup Gradle
+      # -----------------------------
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      # -----------------------------
+      # 4. Check project
+      # -----------------------------
+      - name: Check Android project
         shell: bash
         run: |
           echo "Current directory:"
           pwd
 
-          echo "Files:"
+          echo ""
+          echo "Project files:"
           ls -la
 
-          if [ ! -f "./gradlew" ]; then
-            echo "ERROR: gradlew not found in project directory."
-            exit 1
-          fi
+          echo ""
+          echo "App files:"
+          ls -la app
 
-          chmod +x ./gradlew
+          echo ""
+          echo "Gradle version:"
+          gradle --version
 
-      # 5. Clean project
-      - name: Clean project
-        working-directory: ${{ env.PROJECT_DIR }}
-        shell: bash
-        run: |
-          ./gradlew clean
-
-      # 6. Build Debug APK
+      # -----------------------------
+      # 5. Build Debug APK
+      # -----------------------------
       - name: Build Debug APK
-        working-directory: ${{ env.PROJECT_DIR }}
         shell: bash
         run: |
-          ./gradlew assembleDebug --stacktrace
+          gradle clean assembleDebug --stacktrace
 
-      # 7. Find generated APK
+      # -----------------------------
+      # 6. Find APK
+      # -----------------------------
       - name: Find generated APK
-        working-directory: ${{ env.PROJECT_DIR }}
         shell: bash
         run: |
-          echo "Searching for APK..."
+          echo "Searching for APK files..."
+          find app/build/outputs -type f -name "*.apk" -print
 
-          find . -type f -name "*.apk" -print
-
-      # 8. Upload APK
+      # -----------------------------
+      # 7. Upload APK
+      # -----------------------------
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MyCablePro-Debug-APK
-          path: |
-            ${{ env.PROJECT_DIR }}/app/build/outputs/apk/debug/*.apk
+          path: MyCablePro_Full_Updated_Project/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 
-      # 9. Build summary
+      # -----------------------------
+      # 8. Success message
+      # -----------------------------
       - name: Build completed
+        shell: bash
         run: |
+          echo ""
           echo "======================================"
-          echo "        MyCable Pro APK READY"
+          echo "       MYCABLE PRO APK READY"
           echo "======================================"
-          echo "APK artifact: MyCablePro-Debug-APK"
+          echo ""
+          echo "APK successfully generated."
