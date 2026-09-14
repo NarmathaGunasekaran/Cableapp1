@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/mc_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="58dp"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:background="@color/mc_primary_dark" android:paddingStart="4dp" android:paddingEnd="6dp">
+        <TextView android:id="@+id/btnBack" android:layout_width="42dp" android:layout_height="58dp"
+            android:gravity="center" android:text="‹" android:textColor="#FFFFFF" android:textSize="34sp"/>
+        <TextView android:id="@+id/txtTitle" android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:gravity="center_vertical" android:text="Add Customer"
+            android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"/>
+        <TextView android:id="@+id/btnMore" android:layout_width="42dp" android:layout_height="58dp"
+            android:gravity="center" android:text="⋮" android:textColor="#FFFFFF" android:textSize="28sp"/>
+    </LinearLayout>
+
+ <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+  <LinearLayout android:id="@+id/form" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+   <EditText android:id="@+id/name" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Customer Name *" android:background="@drawable/bg_input"/>
+   <EditText android:id="@+id/phone" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Mobile Number *" android:inputType="phone" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/box" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Box / Smart Card No *" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/cardNo" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Card No" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/mso" android:layout_width="match_parent" android:layout_height="50dp" android:hint="MSO" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/zone" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Zone *" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/packageName" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Package *" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/packageCost" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Monthly Amount *" android:inputType="numberDecimal" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/address" android:layout_width="match_parent" android:layout_height="70dp" android:gravity="top" android:padding="12dp" android:hint="Address" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/agentName" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Agent Name" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <EditText android:id="@+id/agentPhone" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Agent Phone" android:inputType="phone" android:background="@drawable/bg_input" android:layout_marginTop="7dp"/>
+   <TextView android:layout_width="match_parent" android:layout_height="32dp" android:text="Status" android:textStyle="bold" android:gravity="bottom" android:textColor="@color/mc_text"/>
+   <RadioGroup android:id="@+id/statusGroup" android:layout_width="match_parent" android:layout_height="50dp" android:orientation="horizontal">
+    <RadioButton android:id="@+id/active" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Active"/>
+    <RadioButton android:id="@+id/inactive" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Inactive" android:layout_marginStart="18dp"/>
+   </RadioGroup>
+   <Button android:id="@+id/btnSaveCustomer" android:layout_width="match_parent" android:layout_height="52dp" android:text="SAVE CUSTOMER"
+       android:textColor="#FFFFFF" android:textAllCaps="false" android:background="@drawable/bg_green" android:layout_marginTop="10dp"/>
+  </LinearLayout>
+ </ScrollView>
+
+    <LinearLayout android:id="@+id/bottomNav" android:layout_width="match_parent" android:layout_height="62dp"
+        android:orientation="horizontal" android:gravity="center" android:background="#FFFFFF">
+        <TextView android:id="@+id/navHome" android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:gravity="center" android:text="⌂\nHome" android:textSize="11sp"/>
+        <TextView android:id="@+id/navCustomers" android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:gravity="center" android:text="♙\nCustomers" android:textSize="11sp"/>
+        <TextView android:id="@+id/navBilling" android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:gravity="center" android:text="▣\nBilling" android:textSize="11sp"/>
+        <TextView android:id="@+id/navReports" android:layout_width="0dp" android:layout_height="match_parent"
+            android:layout_weight="1" android:gravity="center" android:text="▤\nReports" android:textSize="11sp"/>
+    </LinearLayout>
+
+</LinearLayout>
